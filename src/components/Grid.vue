@@ -14,7 +14,6 @@
 
 <script>
 import BoxContainer from "./BoxContainer";
-import { lerpColor } from '../util/index';
 import chroma from 'chroma-js';
 
 export default {
@@ -43,12 +42,15 @@ export default {
         orderColors() {
             const start_box = this.box_objects.boxes.find(x => x.id == this.from);
             const end_box = this.box_objects.boxes.find(x => x.id == this.to);
-            let amount = 0;
+            const startFrom = this.from >= this.to ? true : false;
+
+            // let amount = 0;
             let colors = chroma
                 .scale([start_box.backgroundColor, end_box.backgroundColor])
-                .mode('lch').colors(this.to - this.from);
+                .mode('lch').colors(startFrom ? 
+                    this.from - this.to : this.to - this.from);
                 
-            let start_count = this.from;
+            let start_count = startFrom ? this.to : this.from;
             colors.forEach((color) => {
                 const box = this.box_objects.boxes.find(x => x.id == start_count);
                 box.backgroundColor = color;
@@ -69,9 +71,9 @@ export default {
 <style>
 #color_grid {
     width:100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    /* justify-content: space-around; */
 }
 </style>

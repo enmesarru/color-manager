@@ -33,7 +33,7 @@ export default {
             event.preventDefault()
         },
         drag(event) {
-            event.dataTransfer.setData("text", event.target.id);
+            event.dataTransfer.setData("text/plain", event.target.id);
             this.$emit("updateFrom", event.target.id);
         },
         drop(event) {

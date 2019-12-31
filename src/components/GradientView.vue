@@ -2,7 +2,7 @@
     <div id="color_view">
         <div 
             class="view" 
-            :style="{'background-image': this.combineColors()}"
+            :style="{'background': combineColors}"
             v-show="viewState"></div>
 
         <div 
@@ -12,7 +12,7 @@
             <div
                 class="box_item"
                 :key="index"
-                v-for="(item, index) in colors"
+                v-for="(item, index) in sharedState.gradientColor"
                 :style="{'background-color': item.color}">
                     <strong> {{ item.color }} </strong>
             </div>
@@ -28,22 +28,24 @@
 </template>
 
 <script>
+import { store } from '../store';
+
 export default {
     name: 'GradientView',
-    props: {
-        colors: Array
-    },
     data() {
         return {
-            viewState: true
+            viewState: true,
+            sharedState: store.state,
         }
     },
-    methods: {
+    computed: {
         combineColors() {
-            if(this.colors.length == 0) 
+            if(this.sharedState.gradientColor.length == 0) 
                 return;
+            if(this.sharedState.gradientColor.length == 1)
+                return this.sharedState.gradientColor[0].color;
             return `linear-gradient(-90deg, 
-                ${this.colors.reverse().map(x => x.color).join(",")})`;
+                ${this.sharedState.gradientColor.reverse().map(x => x.color).join(",")})`;
         }
     }
 }
@@ -74,12 +76,12 @@ export default {
 .view_button {
     width: 100%;
     color: #ffffff;
-    background-color: #FFC25C;
+    background-color: #07B90E;
     padding: 10px;
     text-align: center;
     transition: background-color 0.5s;
 }
 .view_button:hover {
-    background-color: #F5A623;
+    background-color: #0AE912;
 }
 </style>

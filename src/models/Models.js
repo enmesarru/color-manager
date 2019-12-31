@@ -33,4 +33,8 @@ export default class BoxGrid {
         this.boxes = createArray(size)
             .map((box, index) => new Box(index));
     }
+
+    export() {
+        return JSON.stringify(this.boxes.filter(x => x.isSelected()), null, '\t');
+    }
 }
