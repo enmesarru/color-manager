@@ -20,7 +20,7 @@
       </div>
       <div class="tools">
         <button class="btn-tools" @click="exportScheme">Export Scheme</button>
-        <button class="btn-tools" @click="scrollToView">Scroll To {{ scrolled ? "View" : "Boxes" }}</button>
+        <button class="btn-tools" @click="scrollToView">Scroll To {{ scrolled ? "Boxes" : "View" }}</button>
       </div>
       <notifications group="color" position="bottom right" />
     </div>
@@ -59,6 +59,13 @@ export default {
       scrolled: false
     }
   },
+  computed: {
+    // @ToDo: For transparent color
+    hexToRgba() {
+      let rgba = Object.entries(this.colors.rgba).map(([key, value]) => value).join();
+      return `rgba(${rgba})`
+    }
+  },
   methods: {
     scrollToView() {
       var container = document.querySelector('.colorboxes');
@@ -70,8 +77,15 @@ export default {
     },
     exportScheme() {
       const data = this.grid.export();
-      if(data == "[]") return;
-      const blob = new Blob([], {type: "application/json"});
+      if(data == "[]") {
+        this.$notify({
+            group: 'color',
+            title: 'Export Information',
+            text: 'To export the palette, you need to select at least one color.'
+        });
+        return;
+      }
+      const blob = new Blob([data], {type: "application/json"});
       saveAs(blob, "scheme");
     }
   }

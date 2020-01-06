@@ -48,6 +48,7 @@ export default {
     .box_container {
         width: 30px;
         height: 30px;
+        margin: 2px;
         border: 1px solid #32ff6a;
         display: flex;
         justify-content: center;
