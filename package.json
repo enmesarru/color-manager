@@ -24,6 +24,9 @@
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
   },
+  "resolutions": {
+    "serialize-javascript": "^2.1.2"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
